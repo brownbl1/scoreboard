@@ -94,19 +94,23 @@ function Team(props: TeamProps) {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
       }}
     >
       <View
         style={{
-          display: 'flex',
+          flex: 1,
+          marginRight: 3,
+          overflow: 'hidden',
           flexDirection: 'row',
           alignItems: 'center',
         }}
       >
         <SvgUri width="30" height="30" uri={props.img} />
-        <Text style={{ paddingHorizontal: 5, fontWeight: 'bold' }}>
+        <Text
+          numberOfLines={1}
+          style={{ paddingHorizontal: 5, fontWeight: 'bold' }}
+        >
           {props.name}
         </Text>
         <Text style={{ fontSize: 12, color: 'gray' }}>{props.record}</Text>
