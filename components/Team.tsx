@@ -17,7 +17,7 @@ export function Team(props: TeamProps) {
         <Text numberOfLines={1} style={styles.name}>
           {props.name}
         </Text>
-        <Text style={{ fontSize: 12, color: 'gray' }}>{props.record}</Text>
+        <Text style={styles.record}>{props.record}</Text>
       </View>
       <Text style={{ fontWeight: 'bold' }}>{props.score}</Text>
     </View>
@@ -32,10 +32,21 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 1,
-    marginRight: 3,
-    overflow: 'hidden',
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 3,
   },
-  name: { paddingHorizontal: 5, fontWeight: 'bold' },
+
+  name: {
+    display: 'flex',
+    flexShrink: 1,
+    paddingLeft: 5,
+    paddingRight: 2,
+    fontWeight: 'bold',
+  },
+  record: {
+    display: 'flex',
+    fontSize: 12,
+    color: 'gray',
+  },
 })
