@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import {
@@ -7,6 +7,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context'
 import { Card } from './components/Card'
+import { Header } from './components/Header'
 import sample from './sample.json'
 
 export default function AppWrapper() {
@@ -22,6 +23,7 @@ export default function AppWrapper() {
 
 function App() {
   const insets = useSafeAreaInsets()
+  const [week, setWeek] = useState(1)
 
   return (
     <ScrollView
@@ -31,6 +33,7 @@ function App() {
         paddingBottom: insets.bottom,
       }}
     >
+      <Header week={week} onWeekSelected={setWeek} />
       <View style={styles.cards}>
         {sample.map((item, i) => (
           <Card key={i} item={item} />
