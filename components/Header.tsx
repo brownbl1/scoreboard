@@ -5,7 +5,7 @@ import { Button, Dialog, Portal, TextInput } from 'react-native-paper'
 
 type Props = {
   week: number
-  onWeekSelected: (week: number) => void
+  onWeekSelected?: (week: number) => void
 }
 
 export function Header({ week, onWeekSelected }: Props) {
@@ -27,7 +27,7 @@ export function Header({ week, onWeekSelected }: Props) {
           onDismiss={() => setDlgVisible(false)}
           onPressOk={(week) => {
             setDlgVisible(false)
-            onWeekSelected(week)
+            onWeekSelected && onWeekSelected(week)
           }}
         />
       </Portal>
@@ -63,11 +63,14 @@ function SelectWeekDialog({
         <TextInput
           autoFocus
           value={week}
-          onChangeText={setWeek}
+          onChangeText={(text) => {
+            const num = text.replace(/[^0-9]/g, '')
+            setWeek(num)
+          }}
           style={styles.input}
           dense
           placeholder="Week number"
-          keyboardType="number-pad"
+          keyboardType="numeric"
         />
       </Dialog.Content>
       <Dialog.Actions>

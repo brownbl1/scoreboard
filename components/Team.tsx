@@ -13,7 +13,9 @@ export function Team(props: TeamProps) {
   return (
     <View style={styles.container}>
       <View style={styles.left}>
-        <SvgUri width="30" height="30" uri={props.img} />
+        <View style={{ height: 30, width: 30 }}>
+          <SvgUri width="30" height="30" uri={props.img} />
+        </View>
         <Text numberOfLines={1} style={styles.name}>
           {props.name}
         </Text>
