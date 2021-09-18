@@ -9,8 +9,9 @@ const shouldHighlight = (item: Item, prevItem?: Item) => {
   if (!prevItem) return false
 
   return (
-    prevItem.team1Score != item.team1Score ||
-    prevItem.team2Score != item.team2Score
+    prevItem.team1Name == item.team1Name &&
+    (prevItem.team1Score != item.team1Score ||
+      prevItem.team2Score != item.team2Score)
   )
 }
 

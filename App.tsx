@@ -27,7 +27,7 @@ export default function AppWrapper() {
 function App() {
   const insets = useSafeAreaInsets()
   const [week, setWeek] = useState(1)
-  const [data, setData] = useState<string>()
+  const [data, setData] = useState<Item[]>()
   const [fetchTime, setFetchTime] = useState<Date>()
   const [refreshing, setRefreshing] = useState(false)
 
@@ -36,7 +36,7 @@ function App() {
     fetch(
       `https://cbs-scoreboard-web.vercel.app/api/get-data?week=${week}`,
     ).then(async (res) => {
-      const json = await res.text()
+      const json = await res.json()
       setData(json)
       setRefreshing(false)
     })
@@ -64,14 +64,13 @@ function App() {
 }
 
 type BodyProps = {
-  data?: string
+  data?: Item[]
 }
 
 function _Body({ data }: BodyProps) {
-  const d = data && (JSON.parse(data) as Item[])
   return (
     <View style={styles.cards}>
-      {!!d && d.map((item, i) => <Card key={i} item={item} />)}
+      {!!data && data.map((item, i) => <Card key={i} item={item} />)}
     </View>
   )
 }
