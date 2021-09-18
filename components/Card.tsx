@@ -1,17 +1,31 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Card as PCard } from 'react-native-paper'
+import { usePrevious } from '../hooks/usePrevious'
 import { Item } from '../types'
 import { Team } from './Team'
+
+const shouldHighlight = (item: Item, prevItem?: Item) => {
+  if (!prevItem) return false
+
+  return (
+    prevItem.team1Score != item.team1Score ||
+    prevItem.team2Score != item.team2Score
+  )
+}
 
 type CardProps = {
   item: Item
 }
 
 export function Card({ item }: CardProps) {
+  const prevItem = usePrevious(item)
+  const highlight = shouldHighlight(item, prevItem)
+  const yellowStyle = highlight ? styles.yellowBorder : {}
+
   return (
     <View style={styles.container}>
-      <PCard style={{ padding: 8 }}>
+      <PCard style={[{ padding: 8 }, yellowStyle]}>
         <Text style={styles.status}>{item.gameStatus}</Text>
         <Team
           name={item.team1Name}
@@ -32,6 +46,10 @@ export function Card({ item }: CardProps) {
 }
 
 const styles = StyleSheet.create({
+  yellowBorder: {
+    borderColor: 'yellow',
+    borderWidth: 2,
+  },
   container: {
     width: '50%',
     padding: 4,
