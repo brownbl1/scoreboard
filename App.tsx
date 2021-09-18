@@ -1,3 +1,5 @@
+import { getPersistor } from '@rematch/persist'
+import AppLoading from 'expo-app-loading'
 import { StatusBar } from 'expo-status-bar'
 import React, { useEffect, useState } from 'react'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
@@ -9,24 +11,42 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context'
+import { connect, Provider as StoreProvider } from 'react-redux'
+import { PersistGate } from 'redux-persist/lib/integration/react'
 import { Card } from './components/Card'
 import { Header } from './components/Header'
+import { Dispatch, RootState, store } from './store'
 import { Item } from './types'
+
+const persistor = getPersistor()
 
 export default function AppWrapper() {
   return (
-    <SafeAreaProvider>
-      <PaperProvider>
-        <App />
-        <StatusBar />
-      </PaperProvider>
-    </SafeAreaProvider>
+    <StoreProvider store={store}>
+      <PersistGate persistor={persistor} loading={<AppLoading />}>
+        <SafeAreaProvider>
+          <PaperProvider>
+            <App />
+            <StatusBar />
+          </PaperProvider>
+        </SafeAreaProvider>
+      </PersistGate>
+    </StoreProvider>
   )
 }
 
-function App() {
+const mapState = ({ settings }: RootState) => ({
+  week: settings.selectedWeek,
+})
+
+const mapDispatch = ({ settings }: Dispatch) => ({
+  setWeek: settings.setWeek,
+})
+
+type Props = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>
+
+function _App({ week, setWeek }: Props) {
   const insets = useSafeAreaInsets()
-  const [week, setWeek] = useState(1)
   const [data, setData] = useState<Item[]>()
   const [fetchTime, setFetchTime] = useState<Date>()
   const [refreshing, setRefreshing] = useState(false)
@@ -62,6 +82,8 @@ function App() {
     </ScrollView>
   )
 }
+
+const App = connect(mapState, mapDispatch)(_App)
 
 type BodyProps = {
   data?: Item[]
