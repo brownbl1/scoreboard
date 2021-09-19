@@ -25,6 +25,6 @@ export function Arrow() {
 const styles = StyleSheet.create({
   adjust: {
     marginLeft: -8,
-    marginRight: 2,
+    marginRight: 3,
   },
 })
