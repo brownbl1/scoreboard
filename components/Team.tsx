@@ -1,18 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { SvgUri } from 'react-native-svg'
+import { Arrow } from './Arrow'
 
 type TeamProps = {
   name: string
   img: string
   record: string
   score: string
+  winner: boolean
 }
 
 export function Team(props: TeamProps) {
   return (
     <View style={styles.container}>
       <View style={styles.left}>
+        {props.winner && <Arrow />}
         <View style={{ height: 30, width: 30 }}>
           <SvgUri width="30" height="30" uri={props.img} />
         </View>

@@ -33,6 +33,7 @@ export function Card({ item }: CardProps) {
           img={item.team1Img}
           record={item.team1Record}
           score={item.team1Score}
+          winner={item.team1Score > item.team2Score}
         />
         <View style={{ height: 5 }} />
         <Team
@@ -40,6 +41,7 @@ export function Card({ item }: CardProps) {
           img={item.team2Img}
           record={item.team2Record}
           score={item.team2Score}
+          winner={item.team1Score < item.team2Score}
         />
       </PCard>
     </View>
