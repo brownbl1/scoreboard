@@ -24,6 +24,9 @@ export function Card({ item }: CardProps) {
   const highlight = shouldHighlight(item, prevItem)
   const yellowStyle = highlight ? styles.yellowBorder : {}
 
+  const team1Score = item.team1Score ? parseInt(item.team1Score) : 0
+  const team2Score = item.team2Score ? parseInt(item.team2Score) : 0
+
   return (
     <View style={styles.container}>
       <PCard style={[{ padding: 8 }, yellowStyle]}>
@@ -33,7 +36,7 @@ export function Card({ item }: CardProps) {
           img={item.team1Img}
           record={item.team1Record}
           score={item.team1Score}
-          winner={item.team1Score > item.team2Score}
+          winner={team1Score > team2Score}
         />
         <View style={{ height: 5 }} />
         <Team
@@ -41,7 +44,7 @@ export function Card({ item }: CardProps) {
           img={item.team2Img}
           record={item.team2Record}
           score={item.team2Score}
-          winner={item.team1Score < item.team2Score}
+          winner={team1Score < team2Score}
         />
       </PCard>
     </View>
