@@ -15,6 +15,7 @@ import { connect, Provider as StoreProvider } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import { Card } from './components/Card'
 import { Header } from './components/Header'
+import { usePrevious } from './hooks/usePrevious'
 import { Dispatch, RootState, store } from './store'
 import { Item } from './types'
 
@@ -51,7 +52,10 @@ function _App({ week, setWeek }: Props) {
   const [fetchTime, setFetchTime] = useState<Date>()
   const [refreshing, setRefreshing] = useState(false)
 
+  const prevWeek = usePrevious(week)
+
   useEffect(() => {
+    if (week != prevWeek) setData(undefined)
     setRefreshing(true)
     fetch(
       `https://cbs-scoreboard-web.vercel.app/api/get-data?week=${week}`,
@@ -92,7 +96,11 @@ type BodyProps = {
 function _Body({ data }: BodyProps) {
   return (
     <View style={styles.cards}>
-      {!!data && data.map((item, i) => <Card key={i} item={item} />)}
+      {!!data &&
+        data.map((item) => {
+          const key = item.team1Name + item.team2Name
+          return <Card key={key} item={item} />
+        })}
     </View>
   )
 }
