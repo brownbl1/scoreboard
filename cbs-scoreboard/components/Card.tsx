@@ -24,8 +24,8 @@ export function Card({ item }: CardProps) {
   const highlight = shouldHighlight(item, prevItem)
   const yellowStyle = highlight ? styles.yellowBorder : {}
 
-  const team1Score = item.team1Score ? parseInt(item.team1Score) : 0
-  const team2Score = item.team2Score ? parseInt(item.team2Score) : 0
+  const team1Score = parseInt(item.team1Score) || 0
+  const team2Score = parseInt(item.team2Score) || 0
 
   return (
     <View style={styles.container}>
